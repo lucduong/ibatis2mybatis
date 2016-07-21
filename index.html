@@ -17,7 +17,10 @@
 
   <section class="panel-body">
     <section class="row col-md-12">
-      <div class="alert alert-info" id="msg"></div>
+      <div class="alert alert-warning alert-dismissible" role="alert" id="msg">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="content"></span>
+      </div>
     </section>
     <section class="row">
       <div class="form-group col-md-12">
@@ -37,7 +40,7 @@
 
   <footer class="panel-footer clearfix">
     <button type="button" class="btn btn-primary pull-right" id="btnConvert">Convert</button>
-    <button type="button" class="btn btn-primary pull-right" id="btnReset">Reset</button>
+    <button type="button" class="btn btn-primary pull-right" id="btnReset" style="margin-right: 5px">Reset</button>
   </footer>
 </section>
 

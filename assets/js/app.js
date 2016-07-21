@@ -207,7 +207,7 @@ $(document).ready(function () {
     $('#myBatisText').val(result);
 
     showMessage(SUCCESS, "<li>Convert Success, Please check all model again</li>" +
-      "<li>If there is any bugs, please report at <a href='https://github.com/lucduong/ibatis2mybatis/issues'>Issues</a> </li>");
+      "<li>If there is any bugs, please report at <a href='https://github.com/lucduong/ibatis2mybatis/issues' target='_blank'>Issues</a> </li>");
   });
 
   $('#btnReset').on('click', function () {
@@ -216,16 +216,16 @@ $(document).ready(function () {
 
   var showMessage = function (type, msg) {
     $('#msg').show();
-    $('#msg').html(msg);
+    $('#msg span.content').html(msg);
     switch (type) {
       case ERROR:
-        $('#msg').attr('class', 'alert alert-danger');
+        $('#msg').attr('class', 'alert alert-danger alert-dismissible');
         break;
       case INFO:
-        $('#msg').attr('class', 'alert alert-info');
+        $('#msg').attr('class', 'alert alert-info alert-dismissible');
         break;
       case SUCCESS:
-        $('#msg').attr('class', 'alert alert-success');
+        $('#msg').attr('class', 'alert alert-success alert-dismissible');
         break;
     }
   };
