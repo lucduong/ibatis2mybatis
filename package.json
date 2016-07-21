@@ -1,0 +1,30 @@
+{
+  "name": "ibatis2mybatis",
+  "version": "1.0.0",
+  "description": "Convert iBatis to MyBatis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucduong/ibatis2mybatis.git"
+  },
+  "keywords": [
+    "ibatis",
+    "mybatis",
+    "convert"
+  ],
+  "author": "Luc Duong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lucduong/ibatis2mybatis/issues"
+  },
+  "homepage": "https://github.com/lucduong/ibatis2mybatis#readme",
+  "dependencies": {
+    "express": "4.14.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}
