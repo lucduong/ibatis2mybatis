@@ -210,6 +210,10 @@ $(document).ready(function () {
       "<li>If there is any bugs, please report at <a href='https://github.com/lucduong/ibatis2mybatis/issues'>Issues</a> </li>");
   });
 
+  $('#btnReset').on('click', function () {
+    $('#iBatisText, #myBatisText, #txtNamespace').val('');
+  });
+
   var showMessage = function (type, msg) {
     $('#msg').show();
     $('#msg').html(msg);
