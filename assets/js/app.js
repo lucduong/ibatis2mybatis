@@ -80,7 +80,7 @@ String.prototype.replaceAliasByClass = function () {
 
 String.prototype.changeClassToType = function () {
   var str = this;
-  str = str.replace(RESULT_MAP_CLASS, "resultMap type");
+  str = str.replace(RESULT_MAP_CLASS, "resultMap type=");
   str = str.replace(PARA_REGEX, "parameterType=");
   str = str.replace(RESULT_REGEX, "resultType=");
   return str;
@@ -209,6 +209,7 @@ String.prototype.replaceConditionalTag = function () {
   for (i = 0; i < conds.length; i++) {
     str = str.replace(IS_EQUAL_REGEX, 'if test="' + conds[i].property + ' == ' + conds[i].value + '"');
   }
+  str = str.replace(/\/isEqual/g, "/if");
   i = 0;
   conds = [];
 
@@ -226,6 +227,7 @@ String.prototype.replaceConditionalTag = function () {
   for (i = 0; i < conds.length; i++) {
     str = str.replace(IS_NOT_EQUAL_REGEX, 'if test="' + conds[i].property + ' != ' + conds[i].value + '"');
   }
+  str = str.replace(/\/isNotEqual/g, "/if");
   i = 0;
   conds = [];
 
@@ -242,6 +244,7 @@ String.prototype.replaceConditionalTag = function () {
   for (i = 0; i < conds.length; i++) {
     str = str.replace(IS_EMPTY_REGEX, 'if test="' + conds[i].property + ' == null or ' + conds[i].property + ' == \'\'"');
   }
+  str = str.replace(/\/isEmpty/g, "/if");
   i = 0;
   conds = [];
 
@@ -258,6 +261,7 @@ String.prototype.replaceConditionalTag = function () {
   for (i = 0; i < conds.length; i++) {
     str = str.replace(IS_NOT_EMPTY_REGEX, 'if test="' + conds[i].property + ' != null and ' + conds[i].property + ' != \'\'"');
   }
+  str = str.replace(/\/isNotEmpty/g, "/if");
 
   return str;
 };
