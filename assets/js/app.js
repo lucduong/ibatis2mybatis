@@ -13,6 +13,11 @@ var ALIAS_WITH_NEW_LINE_REGEX = /(<\s*typeAlias\s+alias\s*\s*=")([a-zA-Z0-9_]+)(
 var PARA_REGEX = /parameterClass\s*=/g;
 var RESULT_REGEX = /resultClass\s*=/g;
 var INLINE_PARA_REGEX = /(#)([a-zA-Z0-9_"\.]+)(#)/g;
+var RESULT_MAP_CLASS = /resultMap\s+class\s*=/g;
+var IS_EQUAL_REGEX = /(isEqual\s*property\s*=\s*")([a-zA-Z0-9]+)("\s*compareValue\s*=\s*")([a-zA-Z0-9]+)("\s*)/g;
+var IS_NOT_EQUAL_REGEX = /(isNotEqual\s*property\s*=\s*")([a-zA-Z0-9]+)("\s*compareValue\s*=\s*")([a-zA-Z0-9]+)(")/g;
+var IS_NOT_EMPTY_REGEX = /(isNotEmpty\s*property\s*=\s*")([a-zA-Z0-9]+)(")/g;
+var IS_EMPTY_REGEX = /(isEmpty\s*property\s*=\s*")([a-zA-Z0-9]+)(")/g;
 
 String.prototype.classes = [];
 String.prototype.inlineParams = [];
@@ -75,8 +80,9 @@ String.prototype.replaceAliasByClass = function () {
 
 String.prototype.changeClassToType = function () {
   var str = this;
-  str = str.replace(PARA_REGEX, "parameterType");
-  str = str.replace(RESULT_REGEX, "resultType");
+  str = str.replace(RESULT_MAP_CLASS, "resultMap type");
+  str = str.replace(PARA_REGEX, "parameterType=");
+  str = str.replace(RESULT_REGEX, "resultType=");
   return str;
 };
 
@@ -183,6 +189,79 @@ String.prototype.changeJDBCType = function () {
   return str;
 };
 
+String.prototype.replaceConditionalTag = function () {
+  var str = this;
+  var m;
+  var i = 0;
+  var conds = [];
+
+  // equal regex
+  while ((m = IS_EQUAL_REGEX.exec(str)) !== null) {
+    if (m.index === IS_EQUAL_REGEX.lastIndex) {
+      IS_EQUAL_REGEX.lastIndex++;
+    }
+    conds[i++] = {
+      property: m[2],
+      value: m[4]
+    };
+  }
+
+  for (i = 0; i < conds.length; i++) {
+    str = str.replace(IS_EQUAL_REGEX, 'if test="' + conds[i].property + ' == ' + conds[i].value + '"');
+  }
+  i = 0;
+  conds = [];
+
+  // not equal regex
+  while ((m = IS_NOT_EQUAL_REGEX.exec(str)) !== null) {
+    if (m.index === IS_NOT_EQUAL_REGEX.lastIndex) {
+      IS_NOT_EQUAL_REGEX.lastIndex++;
+    }
+    conds[i++] = {
+      property: m[2],
+      value: m[4]
+    };
+  }
+
+  for (i = 0; i < conds.length; i++) {
+    str = str.replace(IS_NOT_EQUAL_REGEX, 'if test="' + conds[i].property + ' != ' + conds[i].value + '"');
+  }
+  i = 0;
+  conds = [];
+
+  // empty regex
+  while ((m = IS_EMPTY_REGEX.exec(str)) !== null) {
+    if (m.index === IS_EMPTY_REGEX.lastIndex) {
+      IS_EMPTY_REGEX.lastIndex++;
+    }
+    conds[i++] = {
+      property: m[2]
+    };
+  }
+
+  for (i = 0; i < conds.length; i++) {
+    str = str.replace(IS_EMPTY_REGEX, 'if test="' + conds[i].property + ' == null or ' + conds[i].property + ' == \'\'"');
+  }
+  i = 0;
+  conds = [];
+
+  // not empty regex
+  while ((m = IS_NOT_EMPTY_REGEX.exec(str)) !== null) {
+    if (m.index === IS_NOT_EMPTY_REGEX.lastIndex) {
+      IS_NOT_EMPTY_REGEX.lastIndex++;
+    }
+    conds[i++] = {
+      property: m[2]
+    };
+  }
+
+  for (i = 0; i < conds.length; i++) {
+    str = str.replace(IS_NOT_EMPTY_REGEX, 'if test="' + conds[i].property + ' != null and ' + conds[i].property + ' != \'\'"');
+  }
+
+  return str;
+};
+
 $(document).ready(function () {
   $('#btnConvert').on('click', function () {
     var namespace = $('#txtNamespace').val();
@@ -202,7 +281,8 @@ $(document).ready(function () {
       .changeInlineParameter()
       .changeItemInLoop()
       .changeLoop()
-      .changeJDBCType();
+      .changeJDBCType()
+      .replaceConditionalTag();
 
     $('#myBatisText').val(result);
 
