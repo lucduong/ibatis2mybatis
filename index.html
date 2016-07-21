@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Convert iBatis -> MyBatis</title>
+
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="vendor/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"/>
+  <link href="assets/css/app.css" rel="stylesheet"/>
+</head>
+<body>
+
+<section class="panel panel-success">
+  <header class="panel-heading">
+    <h1 class="panel-title">iBatis -> MyBatis</h1>
+  </header>
+
+  <section class="panel-body">
+    <section class="row col-md-12">
+      <div class="alert alert-info" id="msg"></div>
+    </section>
+    <section class="row">
+      <div class="form-group col-md-12">
+        <label class="control-label">namespace</label>
+        <input id="txtNamespace" class="form-control" type="text" placeholder="com.dounets.blp.**.*DAO" value="com.dounets.blp.abc.AbcDAO" />
+      </div>
+    </section>
+    <section class="row">
+      <section class="col-md-6 col-lg-6 col-sm-12">
+        <textarea class="form-control" id="iBatisText" rows="20"></textarea>
+      </section>
+      <section class="col-md-6 col-lg-6 col-sm-12">
+        <textarea class="form-control" id="myBatisText" rows="20"></textarea>
+      </section>
+    </section>
+  </section>
+
+  <footer class="panel-footer clearfix">
+    <button type="button" class="btn btn-primary pull-right" id="btnConvert">Convert</button>
+  </footer>
+</section>
+
+<script src="vendor/jquery/jquery-3.1.0.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
